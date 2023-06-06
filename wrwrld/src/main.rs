@@ -1,7 +1,5 @@
 // TO IMPLEMENT
     // -- visual interface that allows drawing of conductors etc
-    // -- write a function that scans the available files in your file system and lets you choose
-    // them based on a number!
 
 // TO DEBUG
 
@@ -22,7 +20,6 @@ use std::io;
 use std::io::Write;
 use std::time::Duration;
 use std::thread;
-use std::path::Path;
 use std::fs;
 
 use colored::*;
@@ -45,6 +42,7 @@ struct Coordinate {
 }
 
 fn process_text_file(mut output_grid_display:Vec<Vec<CellState>>) -> Vec<Vec<CellState>> {
+    /* 
     let mut trimmed_file_name:String;
     loop {
         println!("{} {} {}", "Input the".green(), "file name".yellow(), "you want to open:".green());
@@ -64,14 +62,53 @@ fn process_text_file(mut output_grid_display:Vec<Vec<CellState>>) -> Vec<Vec<Cel
             continue
         }
     }
+    */
+
+    Command::new("clear").status().expect("Failed to run command");
+    let mut file_vector:Vec<String> = Vec::new();
+    let mut desired_index_i32:i32;
+    for file in fs::read_dir("./").expect("Unable to read file directory") {
+        let file_name:String = file.expect("Unable to open file").path().display().to_string();
+        let file_name_vector:Vec<&str> = file_name.split("./").collect();
+        file_vector.push(file_name_vector[1].to_string());
+    }
+    loop {
+        println!("{}\n", "Please select a number corresponding to your desired file.".green());
+        let mut index:i32 = 0;
+        let mut counter:u8 = 1;
+        for entry in file_vector.clone() {
+            if entry == String::from("main.rs") || entry == String::from(".main.rs.swp") {
+                file_vector.remove(i32_to_usize(index));
+                index += 1;
+            } else {
+                println!("{} {} {}", counter, "|".green(), entry);
+                counter += 1;
+                index += 1;
+            }
+        }
+
+        let mut desired_index:String = String::new();
+        io::stdin().read_line(&mut desired_index).expect("Failed to read line");
+        desired_index = desired_index.trim_end().to_string();
+        desired_index_i32 = desired_index.parse::<i32>().expect("Failed to parse number") - 1;
+        if desired_index_i32 < 0 || desired_index_i32 > usize_to_i32(file_vector.clone().len()) - 1 {
+            Command::new("clear").status().expect("Failed to run command");
+            println!("{}\n", "Invalid number detected, please reenter.".red()); 
+            continue;
+        } else {
+            break;
+        }
+    }
+
+    let file_vector_clone:Vec<String> = file_vector.clone();
+    let desired_file_name:&str = file_vector_clone[i32_to_usize(desired_index_i32.clone())].as_str();
 
     // add additional check for a file that does exist, but does not have the desired number of
     // 50 rows and 20 columns (50x and 20y)
     
-    let file_contents:String = fs::read_to_string(trimmed_file_name.clone()).expect("Failed to read file into string");
+    let file_contents:String = fs::read_to_string(desired_file_name.clone()).expect("Failed to read file into string");
     let mut row_vector:Vec<&str> = file_contents.split("\n").collect();
     row_vector.pop();
-    // println!("{:?}", row_vector);
     
     let mut coordinate_vector_conductor:Vec<Coordinate> = Vec::new();
     let mut coordinate_vector_electronhead:Vec<Coordinate> = Vec::new();
@@ -100,7 +137,6 @@ fn process_text_file(mut output_grid_display:Vec<Vec<CellState>>) -> Vec<Vec<Cel
     
     output_grid_display = array_to_cellstate_conductor(output_grid_display.clone(), coordinate_vector_conductor.clone());
     output_grid_display = array_to_cellstate_electronhead(output_grid_display.clone(), coordinate_vector_electronhead.clone());
-
     output_grid_display
 }
 

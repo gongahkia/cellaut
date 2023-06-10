@@ -42,27 +42,6 @@ struct Coordinate {
 }
 
 fn process_text_file(mut output_grid_display:Vec<Vec<CellState>>) -> Vec<Vec<CellState>> {
-    /* 
-    let mut trimmed_file_name:String;
-    loop {
-        println!("{} {} {}", "Input the".green(), "file name".yellow(), "you want to open:".green());
-        let mut file_name:String = String::new(); 
-        io::stdin().read_line(&mut file_name).expect("Failed to read line");
-        trimmed_file_name = file_name.trim_end().to_string();
-        // writing all current entities within the folder into a buffer and then checking if that
-        // file exists within said buffer
-        let check_root_path:bool = Path::new(&trimmed_file_name).is_file();
-        if check_root_path {
-            Command::new("clear").status().expect("Failed to run command");
-            println!("{} {} {}", "File".green(), trimmed_file_name, "has been found, opening now...".green());
-            break
-        } else {
-            Command::new("clear").status().expect("Failed to run command");
-            println!("{}", "File name not found. Check to ensure you entered a valid file name.".red());
-            continue
-        }
-    }
-    */
 
     Command::new("clear").status().expect("Failed to run command");
     let mut file_vector:Vec<String> = Vec::new();
@@ -103,9 +82,6 @@ fn process_text_file(mut output_grid_display:Vec<Vec<CellState>>) -> Vec<Vec<Cel
     let file_vector_clone:Vec<String> = file_vector.clone();
     let desired_file_name:&str = file_vector_clone[i32_to_usize(desired_index_i32.clone())].as_str();
 
-    // add additional check for a file that does exist, but does not have the desired number of
-    // 50 rows and 20 columns (50x and 20y)
-    
     let file_contents:String = fs::read_to_string(desired_file_name.clone()).expect("Failed to read file into string");
     let mut row_vector:Vec<&str> = file_contents.split("\n").collect();
     row_vector.pop();

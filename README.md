@@ -4,4 +4,3 @@ Cellular automata in the CLI.
 
 * [Conway's game of life](cnwgol)
 * [Wireworld](wrwrld)
-* [Terrain generation](trngn)

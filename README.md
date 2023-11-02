@@ -2,5 +2,18 @@
 
 Cellular automata in the CLI.
 
-* [Conway's game of life](cnwgol)
-* [Wireworld](wrwrld)
+## [Conway's game of life](cnwgol)
+
+[![asciicast](https://asciinema.org/a/sOdYTGQKj8qVrdt3Tzyqz8YDH.svg)](https://asciinema.org/a/sOdYTGQKj8qVrdt3Tzyqz8YDH)
+
+## [Wireworld](wrwrld)
+
+[![asciicast](https://asciinema.org/a/aw1i9vaGNDEIC08Mm2Z17Vdy2.svg)](https://asciinema.org/a/aw1i9vaGNDEIC08Mm2Z17Vdy2)
+
+## Installation
+
+```console
+$ git clone https://github.com/gongahkia/cellaut
+$ cd cellaut/cnwgol && cargo run
+$ cd cellaut/wrwrld/src && cargo run
+```

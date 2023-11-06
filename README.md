@@ -1,6 +1,6 @@
 # [Cellular automata](https://www.techtarget.com/searchenterprisedesktop/definition/cellular-automaton)
 
-Cellular automata in the CLI.
+`CLI cellular automata in raw rust`
 
 ## [Conway's game of life](cnwgol)
 

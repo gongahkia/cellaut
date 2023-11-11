@@ -10,7 +10,7 @@
 
 [![asciicast](https://asciinema.org/a/aw1i9vaGNDEIC08Mm2Z17Vdy2.svg)](https://asciinema.org/a/aw1i9vaGNDEIC08Mm2Z17Vdy2)
 
-## Installation
+## installation
 
 ```console
 $ git clone https://github.com/gongahkia/cellaut
